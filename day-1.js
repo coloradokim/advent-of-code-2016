@@ -1,8 +1,14 @@
 // i: list of L/R directions
-// o: from the starting location, how many blocks to the Easter Bunny's location?
+// o: from the starting location, what is the shortest number of blocks to the Easter Bunny's location?
 
-// i: [R2, L3]
+// i: "R2, L3"
 // o: "5 blocks away"
+
+// i: "R2, R2, R2"
+//o: "2 blocks away"
+
+//i: "R5, L5, R5, R3"
+//o: "12 blocks away"
 
 var test1 = "R2, L3"
 var test2 = "R2, R2, R2"
@@ -12,9 +18,7 @@ function findHQ(str) {
   var arr = str.split(',');
   var evens = [];
   var odds = [];
-  var evensObj = {};
-  var oddsObj = {};
-  //Based on their position in the array, sort each item into odds or evens
+  //Based on its position in the array, sort each item into a new odds or evens array
   for (var i = 0; i < arr.length; i++) {
     if ((arr.indexOf(arr[i])) % 2 == 0) {
       evens.push(arr[i])
@@ -22,20 +26,18 @@ function findHQ(str) {
       odds.push(arr[i])
     }
   }
-  evensObj.R = 0
-  evensObj.L = 0
+  //Hi, Jeff! I need a hint here:
+  // I'm trying to create an object from each array.
+  // I will take each item from the even array, and make a new key:value pair. The key is L or R, and the value is the number of blocks traveled.
+  // I'm using this data structure, because I think it will help me with the next step
+  //In each object, Rs cancel out Rs, and Ls cancel out Ls, and then I will combine the remaining numbers
+  //After I have a total from each object, I will add them together, and return the final answer. 
+  var evensObj = {};
+  var oddsObj = {};
   for (var i = 0; i < evens.length; i++) {
-    if (evens[i][0] === 'R'){
-      evensObj.R += evens[i][1]
-    } else {
-      evensObj.L += evens[i][1]
-    }
-    console.log(evensObj);
+    evensObj[evens[i][1]] = evens[i][2]
   }
+  return evensObj
 }
 
 console.log(findHQ(test2));
-
-// Following R2, L3 leaves you 2 blocks East and 3 blocks North, or 5 blocks away.
-// R2, R2, R2 leaves you 2 blocks due South of your starting position, which is 2 blocks away.
-// R5, L5, R5, R3 leaves you 12 blocks away.
